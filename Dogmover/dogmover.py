@@ -97,7 +97,7 @@ def pull_monitors():
     monitors = api.Monitor.get_all()
     for monitor in monitors:
         if monitor["type"] == "synthetics alert":
-                print("Skipping {} as this is a monitor belonging to a synthetic test. Synthetic monitors will be automatically re-created when you push synthetic tests.".format(monitor["name"]))
+                print("Skipping {} as this is a monitor belonging to a synthetic test. Synthetic monitors will be automatically re-created when you push synthetic tests.".format(monitor["name"].encode('utf-8')))
                 continue
         count = count + 1
         new_monitor = {}
@@ -235,6 +235,7 @@ def push_dashboards():
 
 def push_monitors():
     count = 0
+    err_count = 0
     monitors = _files_to_json("monitors")
     if not monitors:
         exit("No monitors are locally available. Consider pulling monitors first.")
