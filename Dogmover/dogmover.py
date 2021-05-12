@@ -89,12 +89,16 @@ def pull_dashboards():
     print("Retrieved '{}' dashboards.".format(count))
 
 def pull_monitors():
+    
     path = False
     count = 0
     good_keys = ['tags', 'deleted', 'query', 'message', 'matching_downtimes', 'multi', 'name', 'type', 'options', 'id']
     new_monitors = []
 
+    print("start pulling monitors")
     monitors = api.Monitor.get_all()
+    print("done pulling monitors")
+    print(monitors)
     for monitor in monitors:
         if monitor["type"] == "synthetics alert":
                 print("Skipping {} as this is a monitor belonging to a synthetic test. Synthetic monitors will be automatically re-created when you push synthetic tests.".format(monitor["name"].encode('utf-8')))
